@@ -59,14 +59,43 @@ def extract_phrases(node):
         return phrases
 
 train_trees = pd.read_csv("train.txt", header=None, names=["text"])
+with open("train_modified.txt", "w", encoding="utf-8") as fout:
 #train_tree is a tree in the file train.txt
-for train_tree in train_trees["text"]:
-  train_tree = str(train_tree).strip()
-  if not train_tree:
-    continue
-  tokens = tokenize(train_tree)
-  parsed_tree = parse_tree(iter(tokens))
-  phrases = extract_phrases(parsed_tree)
+    for train_tree in train_trees["text"]:
+      train_tree = str(train_tree).strip()
+      if not train_tree:
+        continue
+      tokens = tokenize(train_tree)
+      parsed_tree = parse_tree(iter(tokens))
+      phrases = extract_phrases(parsed_tree)
+    
+      for phrase, label in phrases:
+          fout.write(f"{label}\t{phrase}\n")
 
-  for phrase, label in phrases:
-    #i want to send label and phrase into q.txt
+dev_trees = pd.read_csv("dev.txt", header=None, names=["text"])
+with open("dev_modified.txt", "w", encoding="utf-8") as fout:
+#dev_tree is a tree in the file train.txt
+    for dev_tree in dev_trees["text"]:
+      dev_tree = str(dev_tree).strip()
+      if not dev_tree:
+        continue
+      tokens = tokenize(dev_tree)
+      parsed_tree = parse_tree(iter(tokens))
+      phrases = extract_phrases(parsed_tree)
+    
+      for phrase, label in phrases:
+          fout.write(f"{label}\t{phrase}\n")
+
+test_trees = pd.read_csv("test.txt", header=None, names=["text"])
+with open("test_modified.txt", "w", encoding="utf-8") as fout:
+#test_tree is a tree in the file train.txt
+    for test_tree in test_trees["text"]:
+      test_tree = str(test_tree).strip()
+      if not testn_tree:
+        continue
+      tokens = tokenize(test_tree)
+      parsed_tree = parse_tree(iter(tokens))
+      phrases = extract_phrases(parsed_tree)
+    
+      for phrase, label in phrases:
+          fout.write(f"{label}\t{phrase}\n")
