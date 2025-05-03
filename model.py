@@ -90,18 +90,20 @@ def predict_sentiment_sentence(sentence):
     phrases = phrases_from_sentence(sentence)
     len_phrases = len(phrases)
     value = 0
+    out = {}
     for i in range(len_phrases):
         p = predict_sentiment_phrase(phrases[i])
-        if p != 2:
-            value += p
-    value /= len_phrases - 1  # Compute average sentiment score based on phrases
+        out[phrases[i]] = p
+    #     if p != 2:
+    #         value += p
+    # value /= len_phrases  # Compute average sentiment score based on phrases
 
-    if value < 1.5:
-        out = "This review is negative"
-    elif value < 2.5:
-        out = "This review is neutral"
-    else:
-        out = "This review is positive"
+    # if value < 1.5:
+    #     out = "This review is negative"
+    # elif value < 2.5:
+    #     out = "This review is neutral"
+    # else:
+    #     out = "This review is positive"
     
     return out
 
