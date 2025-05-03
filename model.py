@@ -58,8 +58,8 @@ dev_tfidf_matrix = vectorizer.transform(dev_sentences)
 classifier = LogisticRegression(C=10, penalty='l2', solver='lbfgs', max_iter=10000, class_weight='balanced')
 classifier.fit(train_tfidf_matrix, train_labels)
 
-y_pred = classifier.predict(dev_tfidf_matrix)
-accuracy = accuracy_score(dev_labels, y_pred)
+y_pred = classifier.predict(test_tfidf_matrix)
+accuracy = accuracy_score(test_labels, y_pred)
 print(f"Training accuracy: {accuracy}")
 
 def print_accuracy():
