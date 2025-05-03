@@ -43,6 +43,13 @@ dev_labels = dev_dataset['label']
 
 sentences = test_sentences + train_sentences
 labels = test_labels + train_labels
+# If sentences is a pandas Series
+sentences = sentences.dropna()
+
+# Or, if it's a list, remove or replace NaNs
+sentences = [s for s in sentences if isinstance(s, str)]
+# or to replace NaNs with empty string:
+# sentences = [s if isinstance(s, str) else "" for s in sentences]
 
 # Convert text sentences to number form using tfidf vectorizer
 vectorizer = TfidfVectorizer(
