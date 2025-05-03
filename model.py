@@ -20,6 +20,9 @@ test_dataset['label'] = test_dataset['label'] - 1
 dev_dataset = pd.read_csv('dev_modified.txt', sep='\t', header=None, names=["label", "text"])
 dev_dataset['label'] = dev_dataset['label'] - 1
 
+dev_final = pd.read_csv('dev_final.txt', sep='\t', header=None, names=["label", "text"])
+dev_final['label'] = dev_final['label'] - 1
+
 # Apply custom mapping
 def remap_label(label):
     if label in [0, 1]:
@@ -32,14 +35,16 @@ def remap_label(label):
 train_dataset['label'] = train_dataset['label'].apply(remap_label)
 test_dataset['label'] = test_dataset['label'].apply(remap_label)
 dev_dataset['label'] = dev_dataset['label'].apply(remap_label)
+dev_final['label'] = dev_final['label'].apply(remap_label)
 
 train_sentences = train_dataset['text']
 train_labels = train_dataset['label']
 test_sentences = test_dataset['text']
 test_labels = test_dataset['label']
-#accuracy calculation is on dev
 dev_sentences = dev_dataset['text']
 dev_labels = dev_dataset['label']
+final_sentences = dev_final['text']
+final_labels = dev_final['label']
 
 sentences = pd.concat([train_sentences, test_sentences], ignore_index=True)
 labels = pd.concat([train_labels, test_labels], ignore_index=True)
@@ -56,13 +61,13 @@ vectorizer = TfidfVectorizer(
 )
 
 tfidf_matrix = vectorizer.fit_transform(sentences)
-dev_tfidf_matrix = vectorizer.transform(dev_sentences)
+final_tfidf_matrix = vectorizer.transform(final_sentences)
 # Define classifier and fit training data
 classifier = LogisticRegression(C=10, penalty='l2', solver='lbfgs', max_iter=10000, class_weight='balanced')
 classifier.fit(tfidf_matrix, labels)
 
-y_pred = classifier.predict(dev_tfidf_matrix)
-accuracy = accuracy_score(dev_labels, y_pred)
+y_pred = classifier.predict(final_tfidf_matrix)
+accuracy = accuracy_score(final_labels, y_pred)
 print(f"Training accuracy: {accuracy}")
 
 def print_accuracy():
