@@ -41,6 +41,9 @@ test_labels = test_dataset['label']
 dev_sentences = dev_dataset['text']
 dev_labels = dev_dataset['label']
 
+sentences = train_sentences + test_sentences
+labels = train_labels + test_labels
+
 # Convert text sentences to number form using tfidf vectorizer
 vectorizer = TfidfVectorizer(
     stop_words='english',  # Use scikit-learn's English stop words
