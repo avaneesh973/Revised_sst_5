@@ -29,9 +29,9 @@ def remap_label(label):
     else:  # label in [3, 4]
         return 4
 
-train_dataset['label'] = train_dataset['label'].apply(remap_label)
-test_dataset['label'] = test_dataset['label'].apply(remap_label)
-dev_dataset['label'] = dev_dataset['label'].apply(remap_label)
+# train_dataset['label'] = train_dataset['label'].apply(remap_label)
+# test_dataset['label'] = test_dataset['label'].apply(remap_label)
+# dev_dataset['label'] = dev_dataset['label'].apply(remap_label)
 
 train_sentences = train_dataset['text']
 train_labels = train_dataset['label']
@@ -110,9 +110,10 @@ def print_accuracy():
 #     return out
 
 def predict_sentiment(sentence):
+    sentence = sentence.lower().strip()
     test = vectorizer.transform([sentence])
     pred = classifier.predict(test)
-    if pred[0] == 0:
+    if pred[0] == 0 or pred[0] == 1:
         out = "This is negative review"
     elif pred[0] == 2:
         out = "This review was neutral"
