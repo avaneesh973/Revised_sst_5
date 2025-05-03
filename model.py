@@ -91,7 +91,7 @@ def predict_sentiment_sentence(sentence):
     len_phrases = len(phrases)
     value = 0
     out = {}
-    for i in range(len_phrases):
+    for i in reversed(range(len_phrases)):
         p = predict_sentiment_phrase(phrases[i])
         out[phrases[i]] = p
     #     if p != 2:
