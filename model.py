@@ -1,13 +1,11 @@
-
-# import spacy
-# import benepar
-# from nltk import Tree
+import spacy
+import benepar
+from nltk import Tree
 from sklearn.feature_extraction.text import TfidfVectorizer
 from datasets import load_dataset
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
-# from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 import numpy as np
 import pandas as pd
@@ -66,52 +64,54 @@ def print_accuracy():
     return accuracy
 
 # Load Spacy model and Benepar once at the start
-# nlp = spacy.load("en_core_web_md")
-# benepar.download('benepar_en3')
-# nlp.add_pipe("benepar", config={"model": "benepar_en3"})
+nlp = spacy.load("en_core_web_md")
+benepar.download('benepar_en3')
+nlp.add_pipe("benepar", config={"model": "benepar_en3"})
 
 # Function to extract meaningful phrases from a sentence
-# def phrases_from_sentence(sentence):
-#     doc = nlp(sentence)  # Process the sentence with spacy and benepar
-#     phrases = []
-#     for sent in doc.sents:
-#         tree = sent._.parse_string  # Get the parse tree for the sentence
-#         parsed = Tree.fromstring(tree)  # Parse the tree using NLTK
-#         # Extract all phrases where the subtree height is greater than 2
-#         phrases += [' '.join(leaf) for subtree in parsed.subtrees() if subtree.height() > 2 for leaf in [subtree.leaves()]]
-#     return phrases
+def phrases_from_sentence(sentence):
+    doc = nlp(sentence)  # Process the sentence with spacy and benepar
+    phrases = []
+    for sent in doc.sents:
+        tree = sent._.parse_string  # Get the parse tree for the sentence
+        parsed = Tree.fromstring(tree)  # Parse the tree using NLTK
+        # Extract all phrases where the subtree height is greater than 2
+        phrases += [' '.join(leaf) for subtree in parsed.subtrees() if subtree.height() > 2 for leaf in [subtree.leaves()]]
+    return phrases
 
 # Function to predict sentiment for a phrase
-# def predict_sentiment_phrase(phrase):
-#     test = vectorizer.transform([phrase])
-#     pred = classifier.predict(test)
-#     return pred[0]
+def predict_sentiment_phrase(phrase):
+    test = vectorizer.transform([phrase])
+    pred = classifier.predict(test)
+    return pred[0]
 
 # Function to predict sentiment for the sentence by analyzing its phrases
-# def predict_sentiment_sentence(sentence):
-#     phrases = phrases_from_sentence(sentence)
-#     len_phrases = len(phrases)
-#     value = 0
-#     for i in range(len_phrases):
-#         value += predict_sentiment_phrase(phrases[i])
-#     value /= len_phrases  # Compute average sentiment score based on phrases
+def predict_sentiment_sentence(sentence):
+    phrases = phrases_from_sentence(sentence)
+    len_phrases = len(phrases)
+    value = 0
+    for i in range(len_phrases):
+        p = predict_sentiment_phrase(phrases[i])
+        if p != 2:
+            value += p
+    value /= len_phrases - 1  # Compute average sentiment score based on phrases
 
-#     if value < 1.5:
-#         out = "This review is negative"
-#     elif value < 2.5:
-#         out = "This review is neutral"
-#     else:
-#         out = "This review is positive"
-    
-#     return out
-
-def predict_sentiment(sentence):
-    test = vectorizer.transform([sentence])
-    pred = classifier.predict(test)
-    if pred[0] == 0:
-        out = "This is negative review"
-    elif pred[0] == 2:
-        out = "This review was neutral"
+    if value < 1.5:
+        out = "This review is negative"
+    elif value < 2.5:
+        out = "This review is neutral"
     else:
-        out = "This review was positive"
+        out = "This review is positive"
+    
     return out
+
+# def predict_sentiment(sentence):
+#     test = vectorizer.transform([sentence])
+#     pred = classifier.predict(test)
+#     if pred[0] == 0:
+#         out = "This is negative review"
+#     elif pred[0] == 2:
+#         out = "This review was neutral"
+#     else:
+#         out = "This review was positive"
+#     return out
