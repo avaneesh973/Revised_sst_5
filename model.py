@@ -29,9 +29,9 @@ def remap_label(label):
     else:  # label in [3, 4]
         return 4
 
-# train_dataset['label'] = train_dataset['label'].apply(remap_label)
-# test_dataset['label'] = test_dataset['label'].apply(remap_label)
-# dev_dataset['label'] = dev_dataset['label'].apply(remap_label)
+train_dataset['label'] = train_dataset['label'].apply(remap_label)
+test_dataset['label'] = test_dataset['label'].apply(remap_label)
+dev_dataset['label'] = dev_dataset['label'].apply(remap_label)
 
 train_sentences = train_dataset['text']
 train_labels = train_dataset['label']
