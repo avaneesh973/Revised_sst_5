@@ -7,7 +7,7 @@ st.title("Recursive Deep Models for Semantic Compositionality Over a Sentiment T
 
 st.header("Training our model using SVM")
 
-acc = sst_5_modified.print_accuracy()
+acc = model.print_accuracy()
 st.text("The training accuracy is:" )
 st.text(acc)
 
@@ -24,8 +24,8 @@ name1 = st.text_input("Enter ur review about bahubali, we will predict using sst
 # # display the name when the submit button is clicked
 # # .title() is used to get the input text string
 if(st.button('PREDICT')):
-    out = sst_5_modified.predict_sentiment_sentence(name1)
+    out = model.predict_sentiment_sentence(name1)
     st.text(out)
 if(st.button('PREDICT1')):
-    out1 = sst_5_modified.predict_sentiment(name1)
+    out1 = model.predict_sentiment(name1)
     st.text(out1)
