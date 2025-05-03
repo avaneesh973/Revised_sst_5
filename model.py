@@ -51,6 +51,14 @@ sentences = [s for s in sentences if isinstance(s, str)]
 # or to replace NaNs with empty string:
 # sentences = [s if isinstance(s, str) else "" for s in sentences]
 
+# If sentences is a pandas Series
+labels = labels.dropna()
+
+# Or, if it's a list, remove or replace NaNs
+labels = [s for s in labels if isinstance(s, int)]
+# or to replace NaNs with empty string:
+# labels = [s if isinstance(s, int) else "" for s in labels]
+
 # Convert text sentences to number form using tfidf vectorizer
 vectorizer = TfidfVectorizer(
     stop_words='english',  # Use scikit-learn's English stop words
