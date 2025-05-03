@@ -19,7 +19,7 @@ st.text(acc)
 #     out = sst_2_logistic_regression.predict_sentiment(name)
 #     st.text(out)
 
-name1 = st.text_input("Enter ur review about bahubali, we will predict using sst5 trained model", "")
+name1 = st.text_input("Enter ur review:")
 
 # # display the name when the submit button is clicked
 # # .title() is used to get the input text string
