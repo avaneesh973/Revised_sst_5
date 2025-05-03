@@ -44,6 +44,9 @@ dev_labels = dev_dataset['label']
 sentences = pd.concat([train_sentences, test_sentences], ignore_index=True)
 labels = pd.concat([train_labels, test_labels], ignore_index=True)
 
+sentences = pd.concat([sentences, dev_sentences], ignore_index=True)
+labels = pd.concat([labels, dev_labels], ignore_index=True)
+
 # Convert text sentences to number form using tfidf vectorizer
 vectorizer = TfidfVectorizer(
     stop_words='english',  # Use scikit-learn's English stop words
